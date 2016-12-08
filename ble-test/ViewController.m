@@ -19,8 +19,8 @@
     manager = [[CBPeripheralManager alloc]initWithDelegate:self queue:nil];
     
     //独自のサービスとキャラクタリスティスクを一つずつ定義
-    UUIDService = @"C52D11BC-C2EE-422D-955A-D834930CF567";
-    UUIDCharacteristics = @"F13167B2-1FAE-4E7D-9200-B2DFA35510F8";
+    UUIDService = @"0A917941-40E4-40E8-81B8-146FD1F2479A";
+    UUIDCharacteristics = @"0015D5AE-2653-4BB1-8EE1-AF566EE846DC";
     
     self.btnNotify.enabled = false;
     self.btnAdvertising.enabled = false;
@@ -57,7 +57,7 @@
 - (IBAction)onAdvertising:(id)sender {
     
     NSDictionary *advertisingData =
-    @{CBAdvertisementDataLocalNameKey : @"ISYJP",
+    @{CBAdvertisementDataLocalNameKey : @"ble-test",
       CBAdvertisementDataServiceUUIDsKey : @[[CBUUID UUIDWithString:UUIDService]]};
     
     [manager startAdvertising:advertisingData];
@@ -67,6 +67,36 @@
 
 - (void)peripheralManagerDidStartAdvertising:(CBPeripheralManager *)peripheral error:(NSError *)error{
     self.txtStatus.text = @"Advertis開始";
+}
+
+- (void)peripheralManager:(CBPeripheralManager *)peripheral central:(CBCentral *)central didSubscribeToCharacteristic:(CBCharacteristic *)characteristic12{
+    
+    [manager stopAdvertising];
+    
+    NSString *stra = @"Init";
+    NSData *dataa = [stra dataUsingEncoding:NSUTF8StringEncoding];
+    
+    bool isOK = [peripheral updateValue:dataa forCharacteristic:characteristic onSubscribedCentrals:nil];
+    if(isOK){
+        self.txtStatus.text = @"初回通知完了";
+    }
+    else{
+        self.txtStatus.text = @"初回通知エラー";
+    }
+    
+    self.btnNotify.enabled = true;
+}
+
+- (IBAction)onNotify:(id)sender {
+    NSData *dataa = [self.txtNotify.text dataUsingEncoding:NSUTF8StringEncoding];
+    
+    bool isOK = [manager updateValue:dataa forCharacteristic:characteristic onSubscribedCentrals:nil];
+    if(isOK){
+        self.txtStatus.text = @"通知処理完了";
+    }
+    else{
+        self.txtStatus.text = @"通知処理エラー";
+    }
 }
 
 - (void)didReceiveMemoryWarning {
