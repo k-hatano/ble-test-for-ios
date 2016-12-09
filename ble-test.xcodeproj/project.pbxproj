@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A1302B71DFAA92500919BBD /* CentralViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1302B61DFAA92500919BBD /* CentralViewController.m */; };
 		4AD7AFCB1DF95179003C84AA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD7AFCA1DF95179003C84AA /* main.m */; };
 		4AD7AFCE1DF95179003C84AA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD7AFCD1DF95179003C84AA /* AppDelegate.m */; };
 		4AD7AFD11DF95179003C84AA /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD7AFD01DF95179003C84AA /* ViewController.m */; };
@@ -17,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4A1302B51DFAA92500919BBD /* CentralViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CentralViewController.h; sourceTree = "<group>"; };
+		4A1302B61DFAA92500919BBD /* CentralViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CentralViewController.m; sourceTree = "<group>"; };
 		4AD7AFC61DF95179003C84AA /* ble-test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ble-test.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4AD7AFCA1DF95179003C84AA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4AD7AFCC1DF95179003C84AA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -66,6 +69,8 @@
 				4AD7AFCD1DF95179003C84AA /* AppDelegate.m */,
 				4AD7AFCF1DF95179003C84AA /* ViewController.h */,
 				4AD7AFD01DF95179003C84AA /* ViewController.m */,
+				4A1302B51DFAA92500919BBD /* CentralViewController.h */,
+				4A1302B61DFAA92500919BBD /* CentralViewController.m */,
 				4AD7AFD21DF95179003C84AA /* Main.storyboard */,
 				4AD7AFD51DF95179003C84AA /* Assets.xcassets */,
 				4AD7AFD71DF95179003C84AA /* LaunchScreen.storyboard */,
@@ -114,6 +119,7 @@
 				TargetAttributes = {
 					4AD7AFC51DF95179003C84AA = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = J7GH76AUUS;
 					};
 				};
 			};
@@ -155,6 +161,7 @@
 			files = (
 				4AD7AFD11DF95179003C84AA /* ViewController.m in Sources */,
 				4AD7AFCE1DF95179003C84AA /* AppDelegate.m in Sources */,
+				4A1302B71DFAA92500919BBD /* CentralViewController.m in Sources */,
 				4AD7AFCB1DF95179003C84AA /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -268,6 +275,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = J7GH76AUUS;
 				INFOPLIST_FILE = "ble-test/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "jp.nita.ble-test";
@@ -280,6 +288,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = J7GH76AUUS;
 				INFOPLIST_FILE = "ble-test/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "jp.nita.ble-test";

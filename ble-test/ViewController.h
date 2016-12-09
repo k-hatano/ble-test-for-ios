@@ -6,30 +6,9 @@
 //  Copyright © 2016年 Nita. All rights reserved.
 //
 
-#import <CoreBluetooth/CoreBluetooth.h>
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController {
-    CBPeripheralManager *manager;
-    
-    CBMutableCharacteristic *characteristic;
-    CBMutableService *services;
-    
-    NSString* UUIDService;
-    NSString* UUIDCharacteristics;
-}
-
-@property (weak, nonatomic) IBOutlet UIButton *btnAdvertising;
-
-@property (weak, nonatomic) IBOutlet UIButton *btnNotify;
-
-@property (weak, nonatomic) IBOutlet UITextField *txtNotify;
-
-@property (weak, nonatomic) IBOutlet UITextField *txtStatus;
-
-- (IBAction)onAdvertising:(id)sender;
-
-- (IBAction)onNotify:(id)sender;
+@interface ViewController : UIViewController
 
 @end
 
