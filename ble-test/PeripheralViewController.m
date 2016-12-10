@@ -1,18 +1,18 @@
 //
-//  CentralViewController.m
+//  PeripheralViewController.m
 //  ble-test
 //
 //  Created by HatanoKenta on 2016/12/09.
 //  Copyright © 2016年 Nita. All rights reserved.
 //
 
-#import "CentralViewController.h"
+#import "PeripheralViewController.h"
 
-@interface CentralViewController ()
+@interface PeripheralViewController ()
 
 @end
 
-@implementation CentralViewController
+@implementation PeripheralViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
