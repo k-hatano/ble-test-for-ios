@@ -73,10 +73,72 @@
             <objects>
                 <viewController title="Central" id="aLZ-UZ-dja" customClass="CentralViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="i9L-eP-TI9"/>
-                        <viewControllerLayoutGuide type="bottom" id="NZQ-IN-NeS"/>
+                        <viewControllerLayoutGuide type="top" id="wrT-wE-nTQ"/>
+                        <viewControllerLayoutGuide type="bottom" id="62O-Se-geQ"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="uqf-Vl-5zq" customClass="CentralVi">
+                    <view key="view" contentMode="scaleToFill" id="VYC-WB-2e1">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FYT-bL-ifB">
+                                <rect key="frame" x="16" y="72" width="39" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Close"/>
+                                <connections>
+                                    <action selector="OnBtnClose:" destination="aLZ-UZ-dja" eventType="touchUpInside" id="M8t-AM-mLT"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ala-8Q-IX7">
+                                <rect key="frame" x="16" y="110" width="59" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Connect"/>
+                                <connections>
+                                    <action selector="OnBtnConnect:" destination="aLZ-UZ-dja" eventType="touchUpInside" id="hV1-ME-cmy"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hFz-EN-MLx">
+                                <rect key="frame" x="16" y="148" width="35" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Scan"/>
+                                <connections>
+                                    <action selector="OnBtnScan:" destination="aLZ-UZ-dja" eventType="touchUpInside" id="Gs3-NW-GiL"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Notify" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3Wo-wR-Fpt">
+                                <rect key="frame" x="16" y="186" width="97" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Central" id="stV-Cx-xEH">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="MTP-BM-aLf"/>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="btnClose" destination="FYT-bL-ifB" id="OcG-d3-p7D"/>
+                        <outlet property="btnConnect" destination="ala-8Q-IX7" id="Mqo-Jl-njp"/>
+                        <outlet property="btnScan" destination="hFz-EN-MLx" id="aTc-we-sR8"/>
+                        <outlet property="txtNotifyData" destination="3Wo-wR-Fpt" id="Ryg-2q-QX0"/>
+                        <outlet property="txtStatus" destination="Jzy-Iu-Uiw" id="BJg-8k-Fb2"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nlE-vw-X6T" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1048.8" y="429.53523238380814"/>
+        </scene>
+        <!--Peripheral-->
+        <scene sceneID="mZS-hO-FnZ">
+            <objects>
+                <viewController title="Peripheral" id="wkB-8p-Ild" customClass="PeripheralViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="vNK-xT-06N"/>
+                        <viewControllerLayoutGuide type="bottom" id="Ezi-4R-fnf"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="pSC-kp-tLR">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -85,6 +147,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Advertise"/>
                                 <connections>
+                                    <action selector="onAdvertising:" destination="wkB-8p-Ild" eventType="touchUpInside" id="1aX-g1-FFL"/>
                                     <action selector="onAdvertising:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Uzg-wP-OKR"/>
                                 </connections>
                             </button>
@@ -93,6 +156,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Notify"/>
                                 <connections>
+                                    <action selector="onNotify:" destination="wkB-8p-Ild" eventType="touchUpInside" id="ItK-sh-Qvn"/>
                                     <action selector="onNotify:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hwp-Bd-a1Q"/>
                                 </connections>
                             </button>
@@ -111,32 +175,16 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Central" id="stV-Cx-xEH">
-                        <barButtonItem key="backBarButtonItem" title="Back" id="MTP-BM-aLf"/>
-                    </navigationItem>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="nlE-vw-X6T" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1048.8" y="429.53523238380814"/>
-        </scene>
-        <!--Peripheral-->
-        <scene sceneID="mZS-hO-FnZ">
-            <objects>
-                <viewController title="Peripheral" id="wkB-8p-Ild" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="vNK-xT-06N"/>
-                        <viewControllerLayoutGuide type="bottom" id="Ezi-4R-fnf"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="pSC-kp-tLR">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
                     <navigationItem key="navigationItem" title="Peripheral" id="8nR-Sj-uMd">
                         <barButtonItem key="backBarButtonItem" title="Back" id="4zO-zG-Kjw"/>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="btnAdvertising" destination="iam-in-RwW" id="HOt-zI-WsJ"/>
+                        <outlet property="btnNotify" destination="7Kf-Kl-2P3" id="I0e-JX-RAj"/>
+                        <outlet property="txtNotify" destination="OYg-6K-tdq" id="xyx-s6-1TF"/>
+                        <outlet property="txtStatus" destination="Jzy-Iu-Uiw" id="lhv-0k-av4"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OhQ-Y1-Rnl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

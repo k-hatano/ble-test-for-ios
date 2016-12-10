@@ -2,7 +2,7 @@
 //  CentralViewController.m
 //  ble-test
 //
-//  Created by HatanoKenta on 2016/12/09.
+//  Created by HatanoKenta on 2016/12/10.
 //  Copyright © 2016年 Nita. All rights reserved.
 //
 
@@ -14,98 +14,118 @@
 
 @implementation CentralViewController
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    //ペリフェラルを初期化 ここでは、queueは使わない
-    //ここでは初期化だけでサービスの追加はステート変更後に行う
-    //このmanagerオブジェクトをペリフェラルとして以降使う
-    manager = [[CBPeripheralManager alloc]initWithDelegate:self queue:nil];
+    centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
+    [centralManager setDelegate:self];
     
-    //独自のサービスとキャラクタリスティスクを一つずつ定義
+    self.btnScan.enabled = false;
+    self.btnConnect.enabled = false;
+    self.btnClose.enabled = false;
+    
+    self.txtStatus.text = @"";
+    self.txtNotifyData.text = @"";
+    
     UUIDService = @"0A917941-40E4-40E8-81B8-146FD1F2479A";
     UUIDCharacteristics = @"0015D5AE-2653-4BB1-8EE1-AF566EE846DC";
-    
-    self.btnNotify.enabled = false;
-    self.btnAdvertising.enabled = false;
-    
-    self.txtNotify.delegate = self;
 }
 
-- (void)peripheralManagerDidUpdateState:(CBPeripheralManager *)peripheral{
+- (void)centralManagerDidUpdateState:(CBCentralManager *)central{
+    if (central.state == CBCentralManagerStatePoweredOn) {
+        self.btnScan.enabled = true;
+        self.txtStatus.text = @"初期化完了";
+    }
+}
+
+- (IBAction)OnBtnScan:(id)sender {
     
-    switch (manager.state) {
-        case CBPeripheralManagerStatePoweredOn:
-        {
-            CBUUID *sUDID = [CBUUID UUIDWithString:UUIDService];
-            CBUUID *cUDID = [CBUUID UUIDWithString:UUIDCharacteristics];
-            
-            services = [[CBMutableService alloc]initWithType:sUDID primary:YES];
-            characteristic = [[CBMutableCharacteristic alloc]initWithType:cUDID properties:CBCharacteristicPropertyNotify value:nil permissions:CBAttributePermissionsReadable];
-            
-            services.characteristics = @[characteristic];
-            [peripheral addService:services];
+    self.btnScan.enabled = false;
+    self.txtStatus.text = @"スキャン中";
+    
+    CBUUID *uuid = [CBUUID UUIDWithString:UUIDService];
+    NSArray *services = [NSArray arrayWithObjects:uuid,nil];
+    
+    [centralManager scanForPeripheralsWithServices:services
+                                           options:@{ CBCentralManagerScanOptionAllowDuplicatesKey : [NSNumber numberWithBool:YES]}];
+}
+
+- (void) centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)aPeripheral advertisementData:(NSDictionary *)advertisementData RSSI:(NSNumber *)RSSI {
+    [centralManager stopScan];
+    
+    targetPeripheral = aPeripheral;
+    targetPeripheral.delegate = self;
+    
+    self.btnConnect.enabled = true;
+    self.txtStatus.text = @"ペリフェラル検知";
+}
+
+- (IBAction)OnBtnConnect:(id)sender {
+    self.btnConnect.enabled = false;
+    self.txtStatus.text = @"サービススキャン中";
+    
+    [centralManager connectPeripheral:targetPeripheral options:nil];
+}
+
+- (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral
+{
+    [peripheral discoverServices:nil];
+}
+
+- (void) peripheral:(CBPeripheral *)aPeripheral didDiscoverServices:(NSError *)error {
+    
+    for (CBService *aService in aPeripheral.services){
+        if ([aService.UUID isEqual:[CBUUID UUIDWithString:UUIDService]]) {
+            [aPeripheral discoverCharacteristics:@[[CBUUID UUIDWithString:UUIDCharacteristics]]
+                                      forService:aService];
         }
-            
-        default:
-            break;
     }
 }
 
-- (void)peripheralManager:(CBPeripheralManager *)peripheral didAddService:(CBService *)service error:(NSError *)error{
-    
-    self.txtStatus.text = @"Service追加完了";
-    self.btnAdvertising.enabled = true;
-}
-
-- (IBAction)onAdvertising:(id)sender {
-    
-    NSDictionary *advertisingData =
-    @{CBAdvertisementDataLocalNameKey : @"ble-test",
-      CBAdvertisementDataServiceUUIDsKey : @[[CBUUID UUIDWithString:UUIDService]]};
-    
-    [manager startAdvertising:advertisingData];
-    
-    self.btnAdvertising.enabled = false;
-}
-
-- (void)peripheralManagerDidStartAdvertising:(CBPeripheralManager *)peripheral error:(NSError *)error{
-    self.txtStatus.text = @"Advertis開始";
-}
-
-- (void)peripheralManager:(CBPeripheralManager *)peripheral central:(CBCentral *)central didSubscribeToCharacteristic:(CBCharacteristic *)characteristic12{
-    
-    [manager stopAdvertising];
-    
-    NSString *stra = @"Init";
-    NSData *dataa = [stra dataUsingEncoding:NSUTF8StringEncoding];
-    
-    bool isOK = [peripheral updateValue:dataa forCharacteristic:characteristic onSubscribedCentrals:nil];
-    if(isOK){
-        self.txtStatus.text = @"初回通知完了";
-    }
-    else{
-        self.txtStatus.text = @"初回通知エラー";
+- (void)peripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service
+             error:(NSError *)error
+{
+    for (CBService *service in peripheral.services) {
+        for (CBCharacteristic *characteristic in service.characteristics) {
+            [peripheral setNotifyValue:YES forCharacteristic:characteristic];
+        }
     }
     
-    self.btnNotify.enabled = true;
+    self.txtStatus.text = @"Notify受付中";
+    self.btnClose.enabled = true;
 }
 
-- (IBAction)onNotify:(id)sender {
-    NSData *dataa = [self.txtNotify.text dataUsingEncoding:NSUTF8StringEncoding];
+- (void)peripheral:(CBPeripheral *)peripheral
+didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic
+             error:(NSError *)error
+{
+    self.txtStatus.text = @"Notify完了";
     
-    bool isOK = [manager updateValue:dataa forCharacteristic:characteristic onSubscribedCentrals:nil];
-    if(isOK){
-        self.txtStatus.text = @"通知処理完了";
-    }
-    else{
-        self.txtStatus.text = @"通知処理エラー";
-    }
+    NSString *stringFromData =
+    [[NSString alloc] initWithData:characteristic.value encoding:NSUTF8StringEncoding];
+    
+    self.txtNotifyData.text = stringFromData;
+}
+
+- (IBAction)OnBtnClose:(id)sender {
+    [centralManager cancelPeripheralConnection:targetPeripheral];
+    self.btnClose.enabled = false;
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
 
 @end

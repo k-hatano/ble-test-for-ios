@@ -2,34 +2,36 @@
 //  CentralViewController.h
 //  ble-test
 //
-//  Created by HatanoKenta on 2016/12/09.
+//  Created by HatanoKenta on 2016/12/10.
 //  Copyright © 2016年 Nita. All rights reserved.
 //
 
-#import <CoreBluetooth/CoreBluetooth.h>
 #import <UIKit/UIKit.h>
+#import <CoreBluetooth/CoreBluetooth.h>
 
-@interface CentralViewController : UIViewController {
-    CBPeripheralManager *manager;
+@interface CentralViewController : UIViewController <CBCentralManagerDelegate,CBPeripheralDelegate> {
+    CBCentralManager *centralManager;
+    CBPeripheral *targetPeripheral;
     
-    CBMutableCharacteristic *characteristic;
-    CBMutableService *services;
-    
+    //ターゲットペリフェラル
     NSString* UUIDService;
     NSString* UUIDCharacteristics;
 }
 
-@property (weak, nonatomic) IBOutlet UIButton *btnAdvertising;
+@property (weak, nonatomic) IBOutlet UIButton *btnScan;
 
-@property (weak, nonatomic) IBOutlet UIButton *btnNotify;
+@property (weak, nonatomic) IBOutlet UIButton *btnConnect;
 
-@property (weak, nonatomic) IBOutlet UITextField *txtNotify;
+@property (weak, nonatomic) IBOutlet UIButton *btnClose;
+
+@property (weak, nonatomic) IBOutlet UITextField *txtNotifyData;
 
 @property (weak, nonatomic) IBOutlet UITextField *txtStatus;
 
-- (IBAction)onAdvertising:(id)sender;
+- (IBAction)OnBtnScan:(id)sender;
 
-- (IBAction)onNotify:(id)sender;
+- (IBAction)OnBtnClose:(id)sender;
 
+- (IBAction)OnBtnConnect:(id)sender;
 
 @end
