@@ -23,8 +23,8 @@
     manager = [[CBPeripheralManager alloc]initWithDelegate:self queue:nil];
     
     //独自のサービスとキャラクタリスティスクを一つずつ定義
-    UUIDService = @"0A917941-40E4-40E8-81B8-146FD1F2479A";
-    UUIDCharacteristics = @"0015D5AE-2653-4BB1-8EE1-AF566EE846DC";
+    UUIDService = @"9FA480E0-4967-4542-9390-D343DC5D04AE";
+    UUIDCharacteristics = @"AF0BADB1-5B99-43CD-917A-A77BC549E3CC";
     
     self.btnNotify.enabled = false;
     self.btnAdvertising.enabled = false;
